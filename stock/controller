@@ -1,0 +1,26 @@
+import { Request, Response, NextFunction } from 'express';
+import axios, { AxiosResponse } from 'axios';
+
+interface stock {
+    open: Number;
+    high: Number;
+    low: Number;
+    close: Number;
+}
+const getstockinfo = async (req: Request, res: Response, next: NextFunction) => {
+    // get some posts
+    let result: AxiosResponse = await axios.get(`https://jsonmock.hackerrank.com/api/stocks`);
+    let stock: [stock] = result.data;
+    return res.status(200).json({
+        message: stock
+    });
+}
+const getstockinfobydate = async (req: Request, res: Response, next: NextFunction) => {
+        // get some posts
+        let result: AxiosResponse = await axios.get(`https://jsonmock.hackerrank.com/api/stocks?date=5-January-2000`);
+        let stock: [stock] = result.data;
+        return res.status(200).json({
+            message: stock
+        });
+}
+export default{getstockinfo, getstockinfobydate };
